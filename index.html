@@ -1,0 +1,81 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Temperious Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Temperious Manager</h1>
+    <img src="assets/img/temperious-logo.png" alt="Temperious logo" class="logo">
+    <p class="subtitle">Edit locations & thresholds used by Temperious alerts.</p>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <button id="btnReload" class="btn">⟳ Reload from Repo</button>
+      <button id="btnSaveRepo" class="btn primary">💾 Save to Repo</button>
+      <span id="status" class="status"></span>
+    </section>
+
+    <section class="tablewrap">
+      <table id="locTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Threshold (°C)</th>
+            <th>Notify</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- rows injected by app.js -->
+        </tbody>
+      </table>
+    </section>
+
+    <section class="formwrap">
+      <h2 id="formTitle">Add Location</h2>
+      <form id="locForm">
+        <div class="grid">
+          <label>Name
+            <input type="text" id="name" required minlength="2" />
+          </label>
+          <label>Latitude
+            <input type="number" step="any" id="lat" required min="-90" max="90" />
+          </label>
+          <label>Longitude
+            <input type="number" step="any" id="lon" required min="-180" max="180" />
+          </label>
+          <label>Threshold (°C)
+            <input type="number" step="any" id="threshold" required />
+          </label>
+          <label>Notify (optional)
+            <select id="notify">
+              <option value="">—</option>
+              <option value="KASIA">KASIA</option>
+              <option value="MEZ">MEZ</option>
+            </select>
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="btnSave">Save</button>
+          <button type="button" class="btn" id="btnCancel">Cancel</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <small>© Temperious</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
