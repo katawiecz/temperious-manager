@@ -86,8 +86,6 @@ Set environment variables
 
 Deploy 🎉
 
-Access your panel
-Example: https://temperious.katawiecz.vercel.app
 
 💡 How it Works
 
