@@ -1,5 +1,3 @@
-# Temperious Manager
-
 # 🌡️ Temperious Manager
 
 > *“Where weather meets code, and curiosity meets control.”*  
@@ -14,6 +12,7 @@
 It provides a clean, responsive interface for editing, adding, and deleting locations directly from your GitHub repository — no manual commits required.  
 
 The panel integrates seamlessly with **GitHub Actions**, **OpenWeather**, and **Pushover**, letting you control weather alert logic from your phone or desktop.
+
 
 ---
 
@@ -131,9 +130,7 @@ Data Source	GitHub REST API
 Weather	OpenWeather 5-day/3-hour forecast
 Notifications	Pushover API
 Hosting	Vercel (Hobby Tier)
-🖼️ Preview
 
-(Desktop and mobile view – dark mode)
 
 🧊 Credits
 
