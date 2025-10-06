@@ -282,3 +282,8 @@ input:focus-visible, select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+/* Grid items may shrink below their intrinsic width (fixes wrapping) */
+.grid { 
+  grid-template-columns: repeat(5, minmax(0, 1fr));  
+}
+.grid > * { min-width: 0; }  
