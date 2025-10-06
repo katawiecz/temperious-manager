@@ -2,68 +2,143 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Basic metadata -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- App identity -->
   <title>Temperious Manager</title>
+  <meta name="description" content="Manage locations and temperature thresholds used by Temperious alerts." />
+  <link rel="icon" href="assets/img/temperious-logo.png" />
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!--
+    Header: brand + short tagline.
+    Tip: place the logo BEFORE the title so flex layout aligns them nicely.
+  -->
   <header>
-    <h1>Temperious Manager</h1>
-    <img src="assets/img/temperious-logo.png" alt="Temperious logo" class="logo">
-    <p class="subtitle">Edit locations & thresholds used by Temperious alerts.</p>
+    <img
+      src="assets/img/temperious-logo.png"
+      alt="Temperious logo"
+      class="logo"
+      width="64"
+      height="64"
+    />
+    <div>
+      <h1>Temperious Manager</h1>
+      <p class="subtitle">Edit locations & thresholds used by Temperious alerts.</p>
+    </div>
   </header>
 
+  <!-- Main application area -->
   <main>
-    <section class="toolbar">
-      <button id="btnReload" class="btn">⟳ Reload from Repo</button>
-      <button id="btnSaveRepo" class="btn primary">💾 Save to Repo</button>
-      <span id="status" class="status"></span>
+    <!--
+      Toolbar: primary actions.
+      The status element has aria-live so screen readers announce changes.
+    -->
+    <section class="toolbar" aria-label="Toolbar">
+      <button id="btnReload" class="btn" type="button" title="Reload locations from the repository">⟳ Reload from Repo</button>
+      <button id="btnSaveRepo" class="btn primary" type="button" title="Save the current list to the repository">💾 Save to Repo</button>
+      <span id="status" class="status" aria-live="polite" aria-atomic="true"></span>
     </section>
 
-    <section class="tablewrap">
+    <!--
+      Data table: scrolls horizontally on mobile (see CSS .tablewrap).
+      A caption helps with accessibility and context.
+    -->
+    <section class="tablewrap" aria-label="Configured locations">
       <table id="locTable">
+        <caption style="text-align:left; padding:8px 12px; color: var(--muted);">
+          Locations monitored by Temperious (edit below)
+        </caption>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Threshold (°C)</th>
-            <th>Notify</th>
-            <th>Actions</th>
+            <th scope="col">Name</th>
+            <th scope="col">Latitude</th>
+            <th scope="col">Longitude</th>
+            <th scope="col">Threshold (°C)</th>
+            <th scope="col">Notify</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <!-- rows injected by app.js -->
+          <!-- Rows are injected by app.js -->
         </tbody>
       </table>
     </section>
 
-    <section class="formwrap">
+    <!--
+      Form: mobile-first grid (single column, expands at 600px/900px).
+      Labels wrap inputs for larger tap targets. Required fields are marked via HTML5.
+    -->
+    <section class="formwrap" aria-label="Add or edit a location">
       <h2 id="formTitle">Add Location</h2>
-      <form id="locForm">
+
+      <form id="locForm" novalidate>
         <div class="grid">
-          <label>Name
-            <input type="text" id="name" required minlength="2" />
+          <label for="name">Name
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              minlength="2"
+              autocomplete="off"
+              placeholder="e.g., Valenza"
+            />
           </label>
-          <label>Latitude
-            <input type="number" step="any" id="lat" required min="-90" max="90" />
+
+          <label for="lat">Latitude
+            <input
+              type="number"
+              id="lat"
+              name="lat"
+              step="any"
+              required
+              min="-90"
+              max="90"
+              placeholder="e.g., 45.007543"
+            />
           </label>
-          <label>Longitude
-            <input type="number" step="any" id="lon" required min="-180" max="180" />
+
+          <label for="lon">Longitude
+            <input
+              type="number"
+              id="lon"
+              name="lon"
+              step="any"
+              required
+              min="-180"
+              max="180"
+              placeholder="e.g., 8.645312"
+            />
           </label>
-          <label>Threshold (°C)
-            <input type="number" step="any" id="threshold" required />
+
+          <label for="threshold">Threshold (°C)
+            <input
+              type="number"
+              id="threshold"
+              name="threshold"
+              step="any"
+              required
+              placeholder="e.g., -5"
+            />
           </label>
-          <label>Notify (optional)
-            <select id="notify">
+
+          <label for="notify">Notify (optional)
+            <select id="notify" name="notify">
               <option value="">—</option>
               <option value="KASIA">KASIA</option>
               <option value="MEZ">MEZ</option>
             </select>
           </label>
         </div>
+
         <div class="actions">
+          <!-- Primary action submits the form; JS intercepts submit -->
           <button type="submit" class="btn primary" id="btnSave">Save</button>
           <button type="button" class="btn" id="btnCancel">Cancel</button>
         </div>
@@ -71,11 +146,22 @@
     </section>
   </main>
 
+  <!-- Footer: lightweight, purely informational -->
   <footer>
     <small>© Temperious</small>
   </footer>
 
-  <script src="app.js"></script>
+  <!--
+    Defer script so HTML/CSS render first and JS runs after parse.
+    app.js wires up events and talks to /api/locations on Vercel.
+  -->
+  <script src="app.js" defer></script>
+
+  <!-- Noscript hint for users with JS disabled -->
+  <noscript>
+    <p style="color: var(--muted); text-align:center; margin-top: 1rem;">
+      JavaScript is required to use Temperious Manager.
+    </p>
+  </noscript>
 </body>
 </html>
-
