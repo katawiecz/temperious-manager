@@ -99,7 +99,7 @@ Temperious Manager
 ## 🚀 Deployment
 
 ### 1️⃣ Clone the repository
-```bash
+
 git clone https://github.com/katawiecz/temperious-manager.git
 cd temperious-manager
 
@@ -113,6 +113,7 @@ Set environment variables
 
 Deploy 🎉
 
+
 ###  💡 How it Works
 
 The frontend loads the locations.json file from the Temperious repository through the GitHub API.
@@ -123,17 +124,20 @@ When you hit Save to Repo, the backend commits changes securely using your GitHu
 
 The Temperious GitHub Action reads those values and triggers Pushover alerts when tomorrow’s minimum temperature is below your threshold.
 
+---
 
+## 🧠 Tech Stack
 
-##  🧑‍💻 Tech Stack
-Layer	Technology
-Frontend	HTML5, CSS3 (glassy theme), Vanilla JS
-Backend	Node.js (Serverless / Vercel)
-Data Source	GitHub REST API
-Weather	OpenWeather 5-day/3-hour forecast
-Notifications	Pushover API
-Hosting	Vercel (Hobby Tier)
+| Layer | Technology |
+|:------|:------------|
+| **Frontend** | HTML5, CSS3 *(glassy theme)*, Vanilla JS |
+| **Backend** | Node.js *(Serverless / Vercel)* |
+| **Data Source** | GitHub REST API (`locations.json`) |
+| **Weather** | OpenWeather 5-day / 3-hour forecast |
+| **Notifications** | Pushover API |
+| **Hosting** | Vercel *(Hobby Tier)* |
 
+> *A simple stack with strong fundamentals — minimal dependencies, maximum clarity.*
 
 ##  🧊 Credits
 
