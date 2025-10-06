@@ -43,6 +43,8 @@ body {
   padding: 24px;
 }
 
+body { padding-bottom: 88px; } 
+
 /* ---------- Layout containers ---------- */
 header { max-width: 1000px; margin: 0 auto var(--space-3) auto; display: flex; align-items: center; gap: var(--space-3); }
 main   { max-width: 1000px; margin: 0 auto; display: grid; gap: var(--space-3); }
@@ -176,4 +178,50 @@ input:focus-visible, select:focus-visible {
 /* ---------- Motion preference ---------- */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
+}
+
+/* ----- Topbar / ikonka reload ----- */
+.topbar{
+  position: sticky; top: 0; z-index: 10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 10px 12px; margin: 0 auto 10px; max-width: 1000px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.00));
+  border-bottom: 1px solid var(--stroke);
+  border-radius: var(--radius-md);
+}
+.topbar .brand{display:flex; align-items:center; gap:10px;}
+.icon-btn{
+  appearance:none; border:1px solid var(--stroke); background:var(--card);
+  color:var(--text); padding:8px 10px; border-radius:12px; cursor:pointer;
+}
+
+/* ----- Cards (mobile) ----- */
+.cards{ display:none; padding: 0 0 80px; max-width:1000px; margin:0 auto; }
+.loc-card{
+  background: var(--card);
+  border:1px solid var(--stroke);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: 0 6px 30px rgba(0,0,0,.25);
+}
+.loc-card + .loc-card{ margin-top: 10px; }
+.loc-head{ display:flex; align-items:center; gap:10px; }
+.loc-name{ margin:0; font-size:16px; font-weight:600; }
+.coords{ margin:6px 0 10px; color: var(--muted); }
+.loc-actions{ display:flex; align-items:center; gap:12px; }
+.actionlink.danger{ color: var(--danger); }
+
+/* ----- Sticky Save bar ----- */
+.save-bar{
+  position: fixed; left:0; right:0; bottom:0; z-index: 20;
+  display:flex; align-items:center; gap:12px; justify-content:center;
+  padding: 10px 12px; background: rgba(15,23,42,.9); border-top:1px solid var(--stroke);
+}
+.save-bar .btn{ min-width: 160px; }
+
+/* ----- Przełączanie widoku tabela/karty ----- */
+/* Domyślnie: desktop pokazuje tabelę (masz już .tablewrap) */
+@media (max-width: 899px){
+  .tablewrap{ display:none; }  /* ukryj tabelę na telefonie */
+  .cards{ display:block; }     /* pokaż karty na telefonie */
 }

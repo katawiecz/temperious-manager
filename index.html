@@ -19,19 +19,21 @@
     Header: brand + short tagline.
     Tip: place the logo BEFORE the title so flex layout aligns them nicely.
   -->
-  <header>
+<header class="topbar">
+  <div class="brand">
     <img
       src="assets/img/temperious-logo.png"
       alt="Temperious logo"
       class="logo"
-      width="64"
-      height="64"
+      width="32"
+      height="32"
     />
-    <div>
-      <h1>Temperious Manager</h1>
-      <p class="subtitle">Edit locations & thresholds used by Temperious alerts.</p>
-    </div>
+    <h1>Temperious Manager</h1>
+  </div>
+
+  <button class="icon-btn" id="btn-reload" aria-label="Reload from repo">↻</button>
   </header>
+
 
   <!-- Main application area -->
   <main>
@@ -69,6 +71,15 @@
         </tbody>
       </table>
     </section>
+
+    <!-- Mobile cards view (pokazywane na <900px) -->
+<section id="locCards" class="cards" aria-label="Configured locations (cards)"></section>
+
+<!-- Sticky Save bar (pokazuj, gdy są niezapisane zmiany) -->
+<div id="saveBar" class="save-bar" hidden>
+  <span>You have unsaved changes</span>
+  <button class="btn primary" id="btnSaveRepoBottom">Save to Repo</button>
+</div>
 
     <!--
       Form: mobile-first grid (single column, expands at 600px/900px).
