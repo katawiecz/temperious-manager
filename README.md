@@ -32,8 +32,26 @@ It provides a clean, responsive interface for editing, adding, and deleting loca
 
 The panel integrates seamlessly with **GitHub Actions**, **OpenWeather**, and **Pushover**, letting you control weather alert logic from your phone or desktop.
 
+---
+
+## 🖼️ Demo Preview
+
+Take a quick look at **Temperious Manager** in action 👇  
+
+<p align="center">
+  <img src="./assets/img/screen1.png" alt="Temperious Manager main interface" width="80%"/>
+</p>
+
+<p align="center">
+  <img src="./assets/img/screen2.png" alt="Temperious Manager alert interface" width="80%"/>
+</p>
+
+🎥 **Demo video**  
+You can also watch a short walkthrough of the app:  
+➡️ [View Demo (MP4)](./assets/img/demo.mp4)
 
 ---
+
 
 ## ✨ Key Features
 
