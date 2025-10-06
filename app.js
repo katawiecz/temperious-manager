@@ -152,6 +152,7 @@ async function reloadFromRepo() {
 function markDirty() {
   state.dirty = true;
   if (saveBar()) saveBar().hidden = false;
+  document.body.classList.add('has-savebar');  
 }
 
 /**
@@ -160,6 +161,7 @@ function markDirty() {
 function clearDirty() {
   state.dirty = false;
   if (saveBar()) saveBar().hidden = true;
+  document.body.classList.remove('has-savebar');
 }
 
 /**

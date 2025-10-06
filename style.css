@@ -1,35 +1,44 @@
 /* =========================================================
    Temperious Manager — style.css
-   Design goals:
+   Goals:
    - Mobile-first, readable on phones
-   - Clean “glassy” cards with good contrast
-   - Accessible focus states and large tap targets
+   - “Glassy” cards with good contrast
+   - Accessible focus states & large tap targets
    - Minimal motion (respects reduced-motion)
 ========================================================= */
 
-/* ---------- Design tokens (colors, radii, spacing) ---------- */
+/* =========================
+   Design tokens & layout vars
+   ========================= */
 :root {
-  --bg: #0f172a;            /* deep slate background */
-  --card: rgba(255,255,255,0.08);      /* glass card fill */
-  --stroke: rgba(255,255,255,0.14);    /* glass border */
-  --text: #e5e7eb;          /* primary text */
-  --muted: #a1a1aa;         /* secondary text */
-  --accent: #22d3ee;        /* cyan accent */
-  --accent-2: #60a5fa;      /* blue accent */
-  --danger: #f87171;        /* soft red (delete, errors) */
+  /* Colors */
+  --bg: #0f172a;                         /* deep slate background */
+  --card: rgba(255,255,255,0.08);        /* glass card fill */
+  --stroke: rgba(255,255,255,0.14);      /* glass border */
+  --text: #e5e7eb;                       /* primary text */
+  --muted: #a1a1aa;                      /* secondary text */
+  --accent: #22d3ee;                     /* cyan accent */
+  --accent-2: #60a5fa;                   /* blue accent */
+  --danger: #f87171;                     /* soft red (delete, errors) */
 
+  /* Radius & spacing */
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
-
   --space-1: 6px;
   --space-2: 10px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
+
+  /* Fixed heights for sticky bars */
+  --topbar-h: 56px;                      /* sticky header height */
+  --savebar-h: 72px;                     /* sticky bottom bar height */
 }
 
-/* ---------- Base / reset ---------- */
+/* =========================
+   Base / reset
+   ========================= */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
@@ -42,18 +51,25 @@ body {
   font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
   padding: 24px;
 }
+/* Add bottom space only when save bar is visible (class toggled in JS) */
+.has-savebar { padding-bottom: calc(var(--savebar-h) + env(safe-area-inset-bottom)); }
 
-body { padding-bottom: 88px; } 
+/* Scroll anchoring offset so in-page targets don’t hide under sticky topbar */
+body, main { scroll-padding-top: calc(var(--topbar-h) + 8px); }
 
-/* ---------- Layout containers ---------- */
-header { max-width: 1000px; margin: 0 auto var(--space-3) auto; display: flex; align-items: center; gap: var(--space-3); }
+/* =========================
+   Page containers
+   ========================= */
+header { max-width: 1000px; margin: 0 auto var(--space-3); display: flex; align-items: center; gap: var(--space-3); }
 main   { max-width: 1000px; margin: 0 auto; display: grid; gap: var(--space-3); }
-footer { max-width: 1000px; margin: var(--space-2) auto 0 auto; color: var(--muted); }
+footer { max-width: 1000px; margin: var(--space-2) auto 0; color: var(--muted); }
 
-header h1 { margin: 0 0 6px 0; font-size: 28px; letter-spacing: .2px; }
+header h1 { margin: 0 0 6px; font-size: 28px; letter-spacing: .2px; }
 .subtitle  { margin: 0; color: var(--muted); }
 
-/* ---------- Branding ---------- */
+/* =========================
+   Branding
+   ========================= */
 .logo {
   width: 64px; height: 64px;
   object-fit: contain;
@@ -61,17 +77,54 @@ header h1 { margin: 0 0 6px 0; font-size: 28px; letter-spacing: .2px; }
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
-/* ---------- Toolbar ---------- */
+/* =========================
+   Sticky topbar (mobile-optimized)
+   ========================= */
+.topbar{
+  position: sticky;
+  top: 0;
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin: 0 auto 10px;
+  max-width: 1000px;
+  background: rgba(10,16,26,.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--stroke);
+  border-radius: var(--radius-md);
+  z-index: 20;                                    /* sit above content */
+}
+.topbar .brand { display:flex; align-items:center; gap:10px; }
+.topbar .brand h1 { font-size: 18px; line-height: 1; margin: 0; }  /* compact title on phones */
+.topbar .logo { width: 24px; height: 24px; }
+
+.icon-btn{
+  appearance:none;
+  border:1px solid var(--stroke);
+  background:var(--card);
+  color:var(--text);
+  padding:8px 10px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* =========================
+   Toolbar (desktop buttons & status)
+   ========================= */
 .toolbar { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
 .status  { margin-left: 4px; color: var(--muted); }
 
-/* ---------- Buttons (mobile-friendly, accessible) ---------- */
+/* =========================
+   Buttons (accessible, touch-friendly)
+   ========================= */
 .btn {
   appearance: none;
   border: 1px solid var(--stroke);
   background: var(--card);
   color: var(--text);
-  padding: 12px 16px;                     /* larger tap target */
+  padding: 12px 16px;                              /* large tap target */
   border-radius: var(--radius-sm);
   cursor: pointer;
   backdrop-filter: blur(8px);
@@ -95,7 +148,9 @@ header h1 { margin: 0 0 6px 0; font-size: 28px; letter-spacing: .2px; }
   border-radius: calc(var(--radius-sm) + 2px);
 }
 
-/* ---------- Cards / wrappers ---------- */
+/* =========================
+   Cards / wrappers
+   ========================= */
 .tablewrap,
 .formwrap {
   background: var(--card);
@@ -104,11 +159,13 @@ header h1 { margin: 0 0 6px 0; font-size: 28px; letter-spacing: .2px; }
   box-shadow: 0 6px 30px rgba(0,0,0,.25);
 }
 
-/* ---------- Table (scrollable on small screens) ---------- */
+/* =========================
+   Table (scrollable on small screens)
+   ========================= */
 .tablewrap { overflow-x: auto; }
 table {
   width: 100%;
-  min-width: 560px;              /* allow horizontal scroll on phones */
+  min-width: 560px;                                /* allow horizontal scroll on phones */
   border-collapse: collapse;
 }
 th, td {
@@ -131,12 +188,14 @@ tbody tr:nth-child(odd) { background: rgba(255,255,255,0.03); }
   color: var(--muted);
 }
 
-/* ---------- Form ---------- */
+/* =========================
+   Form
+   ========================= */
 .formwrap { padding: var(--space-3); }
 .formwrap h2 { margin: 4px 4px 8px; }
 .grid {
   display: grid;
-  grid-template-columns: 1fr;    /* mobile-first: single column */
+  grid-template-columns: 1fr;                      /* mobile-first: single column */
   gap: var(--space-2);
 }
 label {
@@ -160,42 +219,9 @@ input:focus-visible, select:focus-visible {
 }
 .actions { display: flex; gap: var(--space-2); margin-top: var(--space-2); }
 
-/* ---------- Links (table actions) ---------- */
-.actionlink { cursor: pointer; color: #93c5fd; }
-.actionlink:hover { text-decoration: underline; }
-
-/* ---------- Responsive enhancements ---------- */
-/* Tablets and up: 2 columns form grid */
-@media (min-width: 600px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* Desktops and up: denser form grid */
-@media (min-width: 900px) {
-  .grid { grid-template-columns: repeat(5, 1fr); }
-}
-
-/* ---------- Motion preference ---------- */
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-}
-
-/* ----- Topbar / ikonka reload ----- */
-.topbar{
-  position: sticky; top: 0; z-index: 10;
-  display:flex; align-items:center; justify-content:space-between;
-  padding: 10px 12px; margin: 0 auto 10px; max-width: 1000px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.00));
-  border-bottom: 1px solid var(--stroke);
-  border-radius: var(--radius-md);
-}
-.topbar .brand{display:flex; align-items:center; gap:10px;}
-.icon-btn{
-  appearance:none; border:1px solid var(--stroke); background:var(--card);
-  color:var(--text); padding:8px 10px; border-radius:12px; cursor:pointer;
-}
-
-/* ----- Cards (mobile) ----- */
+/* =========================
+   Card list (mobile view)
+   ========================= */
 .cards{ display:none; padding: 0 0 80px; max-width:1000px; margin:0 auto; }
 .loc-card{
   background: var(--card);
@@ -209,19 +235,50 @@ input:focus-visible, select:focus-visible {
 .loc-name{ margin:0; font-size:16px; font-weight:600; }
 .coords{ margin:6px 0 10px; color: var(--muted); }
 .loc-actions{ display:flex; align-items:center; gap:12px; }
+.actionlink { cursor: pointer; color: #93c5fd; }
+.actionlink:hover { text-decoration: underline; }
 .actionlink.danger{ color: var(--danger); }
 
-/* ----- Sticky Save bar ----- */
+/* =========================
+   Sticky Save bar (bottom)
+   ========================= */
 .save-bar{
-  position: fixed; left:0; right:0; bottom:0; z-index: 20;
-  display:flex; align-items:center; gap:12px; justify-content:center;
-  padding: 10px 12px; background: rgba(15,23,42,.9); border-top:1px solid var(--stroke);
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: var(--savebar-h);
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(11,17,28,.95);
+  border-top: 1px solid var(--stroke);
+  z-index: 30;
 }
 .save-bar .btn{ min-width: 160px; }
 
-/* ----- Przełączanie widoku tabela/karty ----- */
-/* Domyślnie: desktop pokazuje tabelę (masz już .tablewrap) */
+/* Avoid the form’s action buttons hiding under the save bar */
+#locForm{ padding-bottom: calc(var(--savebar-h) + 16px); }
+#locForm .actions{ margin-bottom: 12px; }
+
+/* =========================
+   Responsive switches
+   ========================= */
+/* On phones: hide table, show cards */
 @media (max-width: 899px){
-  .tablewrap{ display:none; }  /* ukryj tabelę na telefonie */
-  .cards{ display:block; }     /* pokaż karty na telefonie */
+  .tablewrap{ display:none; }
+  .cards{ display:block; }
+}
+
+/* Form grid: 2 columns on tablets */
+@media (min-width: 600px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Form grid: denser on desktops */
+@media (min-width: 900px) {
+  .grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* =========================
+   Motion preference
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }
