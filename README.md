@@ -6,14 +6,23 @@
 ---
 
 <p align="center">
-  <a href="https://vercel.com"><img src="https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel" alt="Vercel Badge"/></a>
-  <a href="https://github.com/katawiecz/temperious-manager/actions"><img src="https://img.shields.io/github/actions/workflow/status/katawiecz/temperious-manager/deploy.yml?style=for-the-badge&logo=github&label=GitHub%20Actions" alt="GitHub Actions Badge"/></a>
+  <a href="https://vercel.com">
+    <img src="https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel" alt="Vercel Badge"/>
+  </a>
+  <a href="https://github.com/katawiecz/temperious-manager/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/katawiecz/temperious-manager/deploy.yml?style=for-the-badge&logo=github&label=GitHub%20Actions" alt="GitHub Actions Badge"/>
+  </a>
   <img src="https://img.shields.io/badge/HTML5-%23E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML Badge"/>
   <img src="https://img.shields.io/badge/CSS3-%231572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS Badge"/>
   <img src="https://img.shields.io/badge/JavaScript-%23F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript Badge"/>
-  <a href="https://openweathermap.org"><img src="https://img.shields.io/badge/OpenWeather-API-orange?style=for-the-badge&logo=icloud&logoColor=white" alt="OpenWeather Badge"/></a>
-  <img src="https://img.shields.io/badge/License-Custom%20NonCommercial-blueviolet?style=for-the-badge" alt="License Badge"/>
+  <a href="https://openweathermap.org">
+    <img src="https://img.shields.io/badge/OpenWeather-API-orange?style=for-the-badge&logo=icloud&logoColor=white" alt="OpenWeather Badge"/>
+  </a>
+  <a href="./LICENSE/LICENSE.md">
+    <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="License: MIT Badge"/>
+  </a>
 </p>
+
 
 ## 🧭 Overview
 
@@ -104,7 +113,7 @@ Set environment variables
 
 Deploy 🎉
 
-💡 How it Works
+###  💡 How it Works
 
 The frontend loads the locations.json file from the Temperious repository through the GitHub API.
 
@@ -116,8 +125,7 @@ The Temperious GitHub Action reads those values and triggers Pushover alerts whe
 
 
 
-
-🧑‍💻 Tech Stack
+##  🧑‍💻 Tech Stack
 Layer	Technology
 Frontend	HTML5, CSS3 (glassy theme), Vanilla JS
 Backend	Node.js (Serverless / Vercel)
@@ -127,7 +135,7 @@ Notifications	Pushover API
 Hosting	Vercel (Hobby Tier)
 
 
-🧊 Credits
+##  🧊 Credits
 
 Design & Development: Kasia Wieczorek
 
@@ -137,7 +145,7 @@ Notifications: Pushover
 
 Hosting: Vercel
 
-🪄 License
+##  🪄 License
 
 This project is licensed under the MIT License — simple, open, and community-friendly.
 You are free to use, modify, and share this code, provided that you keep the original copyright notice.
