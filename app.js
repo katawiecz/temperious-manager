@@ -8,10 +8,13 @@
 
 /** ---------------------------------------------------------------------------
  * Application state
- * rows:       Array of location objects: { name, lat, lon, threshold, notify? }
+ * rows:       Array<{ name: string, lat: number, lon: number, threshold: number, daysAhead: number }>
  * editIndex:  Index of the row being edited (null when adding a new one)
  * dirty:      Flag indicating unsaved local changes
  * -------------------------------------------------------------------------- */
+
+const MAX_FORECAST_DAYS = 5;
+
 const state = {
   rows: [],
   editIndex: null,
@@ -23,10 +26,12 @@ const cardsEl = () => document.querySelector('#locCards');
 const saveBar = () => document.querySelector('#saveBar');
 
 const el  = (sel) => document.querySelector(sel);
-const els = (sel) => Array.from(document.querySelectorAll(sel));
 
 const tableBody = () => el('#locTable tbody');
 const statusEl  = () => el('#status');
+
+
+
 
 /**
  * Update the inline status label.
@@ -47,14 +52,13 @@ function setStatus(msg, kind = 'info') {
 /**
  * Render a single row for the desktop table view.
  */
-function rowToHtml(item, idx) {
-  const notify = item.notify || '—';
+function rowToHtml(item, idx){
   return `<tr>
     <td>${escapeHtml(item.name)}</td>
     <td>${item.lat}</td>
     <td>${item.lon}</td>
     <td>${item.threshold}</td>
-    <td><span class="badge">${escapeHtml(notify)}</span></td>
+    <td>${item.daysAhead}</td>
     <td>
       <span class="actionlink" data-act="edit" data-idx="${idx}">Edit</span>
       &nbsp;·&nbsp;
@@ -63,11 +67,11 @@ function rowToHtml(item, idx) {
   </tr>`;
 }
 
+
 /**
  * Render a single card for the mobile view.
  */
-function rowToCardHtml(item, idx) {
-  const notify = escapeHtml(item.notify || '—');
+function rowToCardHtml(item, idx){
   return `
   <article class="loc-card">
     <div class="loc-head">
@@ -79,10 +83,11 @@ function rowToCardHtml(item, idx) {
       <span class="actionlink" data-act="edit" data-idx="${idx}">Edit</span>
       &nbsp;·&nbsp;
       <span class="actionlink danger" data-act="del" data-idx="${idx}">Delete</span>
-      <span class="badge">${notify}</span>
+      <span class="badge">D+${item.daysAhead}</span>
     </div>
   </article>`;
 }
+
 
 /**
  * Render both views (table + cards). CSS decides which is visible.
@@ -91,6 +96,8 @@ function render() {
   tableBody().innerHTML = state.rows.map(rowToHtml).join('');
   if (cardsEl()) cardsEl().innerHTML = state.rows.map(rowToCardHtml).join('');
 }
+
+
 
 /* ============================================================================
    Utilities
@@ -125,25 +132,18 @@ async function reloadFromRepo() {
 
   setStatus('Loading…');
   const res = await fetch('/api/locations');
-
-  if (!res.ok) {
-    setStatus('Failed to load (see console)');
-    console.error(await res.text());
-    return;
-  }
+  if (!res.ok) { setStatus('Failed to load (see console)'); console.error(await res.text()); return; }
 
   const data = await res.json();
-  if (!Array.isArray(data)) {
-    setStatus('Invalid data from API');
-    return;
-  }
+  if (!Array.isArray(data)) { setStatus('Invalid data from API'); return; }
 
-  state.rows = data;
+  state.rows = data.map(d => ({ ...d, daysAhead: Number.isInteger(d?.daysAhead) ? d.daysAhead : 5 }));
   state.editIndex = null;
   render();
   clearDirty();
   setStatus(`Loaded ${state.rows.length} location(s)`);
 }
+
 
 /**
  * Mark local state as having unsaved changes.
@@ -198,16 +198,16 @@ function validate(form) {
   const lat = Number(form.querySelector('#lat').value);
   const lon = Number(form.querySelector('#lon').value);
   const threshold = Number(form.querySelector('#threshold').value);
-  const notify = form.querySelector('#notify').value.trim();
+  const daysAhead = Number(form.querySelector('#daysAhead').value);
 
-  if (name.length < 2) throw new Error('Name must be at least 2 chars');
-  if (!Number.isFinite(lat) || lat < -90 || lat > 90) throw new Error('Latitude must be between -90 and 90');
-  if (!Number.isFinite(lon) || lon < -180 || lon > 180) throw new Error('Longitude must be between -180 and 180');
-  if (!Number.isFinite(threshold)) throw new Error('Threshold must be a number');
+if(name.length < 2) throw new Error('Name must be at least 2 chars');
+  if(!Number.isFinite(lat) || lat < -90 || lat > 90) throw new Error('Latitude must be between -90 and 90');
+  if(!Number.isFinite(lon) || lon < -180 || lon > 180) throw new Error('Longitude must be between -180 and 180');
+  if(!Number.isFinite(threshold)) throw new Error('Threshold must be a number');
+  if(!Number.isInteger(daysAhead) || daysAhead < 1 || daysAhead > MAX_FORECAST_DAYS)
+    throw new Error(`Forecast days must be 1–${MAX_FORECAST_DAYS}`);
 
-  const obj = { name, lat, lon, threshold };
-  if (notify) obj.notify = notify; // notify is optional
-  return obj;
+  return { name, lat, lon, threshold, daysAhead };
 }
 
 /**
@@ -218,7 +218,7 @@ function fillForm(item) {
   el('#lat').value = item?.lat ?? '';
   el('#lon').value = item?.lon ?? '';
   el('#threshold').value = item?.threshold ?? '';
-  el('#notify').value = item?.notify || '';
+  el('#daysAhead').value = item?.daysAhead ?? 5;
 }
 
 /**
