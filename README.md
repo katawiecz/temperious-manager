@@ -46,9 +46,10 @@ Take a quick look at **Temperious Manager** in action 👇
   <img src="./assets/img/screen2.png" alt="Temperious Manager alert interface" width="80%"/>
 </p>
 
-🎥 **Demo video**  
-You can also watch a short walkthrough of the app:  
-➡️ [View Demo (MP4)](./assets/img/demo.mp4)
+---
+
+🎥 **Demo video**
+➡️ [View Demo (MP4)](https://raw.githubusercontent.com/katawiecz/temperious-manager/main/assets/img/demo.mp4)
 
 ---
 
