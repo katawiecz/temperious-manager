@@ -49,8 +49,10 @@ Take a quick look at **Temperious Manager** in action 👇
 ---
 
 🎥 **Demo video**
-➡️ [View Demo (MP4)](https://raw.githubusercontent.com/katawiecz/temperious-manager/main/assets/img/demo.mp4)
 
+<p align="center">
+  <img src="./assets/img/demo.gif" alt="Temperious Manager demo" width="80%" />
+</p>
 ---
 
 
