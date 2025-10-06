@@ -139,7 +139,20 @@ Hosting: Vercel
 
 🪄 License
 
-This project is intended for personal and educational use.
-You may explore, fork, and experiment — but please do not redistribute or use it commercially without permission.
+This project is licensed under the MIT License — simple, open, and community-friendly.
+You are free to use, modify, and share this code, provided that you keep the original copyright notice.
 
-"Made with logic, frost, and curiosity." ❄️
+For more details, see the full license documents in the LICENSE/
+ folder:
+
+LICENSE.md
+ — full MIT license text
+
+NOTICE.md
+ — third-party acknowledgements
+
+CREDITS.md
+ — design and development credits
+
+“Code is colder when shared with warmth.” ❄️
+© 2025 Kasia Wieczorek
