@@ -51,7 +51,7 @@ Take a quick look at **Temperious Manager** in action 👇
 🎥 **Demo video**
 
 <p align="center">
-  <img src="./assets/img/demo.gif" alt="Temperious Manager demo" width="80%" />
+  <img src="./assets/img/demo.gif" alt="Temperious Manager demo" width="30%" />
 </p>
 ---
 
